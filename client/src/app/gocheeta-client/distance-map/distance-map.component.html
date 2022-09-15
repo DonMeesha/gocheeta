@@ -1,0 +1,104 @@
+<div class="row gocheeta-panel">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="card-title ">Distance Map</h4>
+                                <p class="card-category"> All the distances for each branches are listed here</p>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success pull-right" (click)="loadCreateMap()">
+                                    <i class="fa fa-plus"></i>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <app-data-table
+                                [data]="availableMappings"
+                                [columns]="availableColumns"
+                                [isDeleteSupport]="true"
+                                [isEditSupport]="true"
+                                (deleteEmitter)="deleteMapMethod($event)"
+                                (editEmitter)="loadUpdateMap($event)"
+                            >
+                            </app-data-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>      
+</div>
+
+<!-- modals -->
+<div class="modal fade" id="createNewMap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New Map</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select Start Branch</label>
+                <select class="form-control" [(ngModel)]="newMap.startCityId">
+                  <option *ngFor="let branch of availableBranches" [value]="branch.id">{{branch.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select End Branch</label>
+                <select class="form-control" [(ngModel)]="newMap.endCityId">
+                  <option *ngFor="let branch of availableBranches" [value]="branch.id">{{branch.name}}</option>
+                </select>
+            </div>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Street Name" type="number" [(ngModel)]="newMap.totalDistance">
+            </mat-form-field>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="createNewMap()">Save</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateNewMap" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update new map</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select Start Branch</label>
+                <select class="form-control" [(ngModel)]="updateMap.startCityId">
+                  <option *ngFor="let branch of availableBranches" [value]="branch.id">{{branch.name}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select End Branch</label>
+                <select class="form-control" [(ngModel)]="updateMap.endCityId">
+                  <option *ngFor="let branch of availableBranches" [value]="branch.id">{{branch.name}}</option>
+                </select>
+            </div>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Total Distance" type="number" [(ngModel)]="updateMap.totalDistance">
+            </mat-form-field>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="updateMapMethod()">Save</button>
+        </div>
+      </div>
+    </div>
+</div>

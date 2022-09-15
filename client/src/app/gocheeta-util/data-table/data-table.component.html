@@ -1,0 +1,35 @@
+<table class="table">
+    <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage">
+        <thead>
+        <tr>
+            <th *ngFor="let col of columns" [style]="col.styleRules">
+                <mfDefaultSorter [by]="col.isSort ===  true ? col : undefined">{{col.label}}</mfDefaultSorter>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of mf.data">
+            <td *ngFor="let col of columns">
+                <ng-container *ngIf="col.type === 'data'">
+                    {{item[col.fieldName]}}
+                </ng-container>
+                <ng-container *ngIf="col.type === 'action'">
+                    <button class="btn btn-link" (click)="onEditClicked(item)">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                    <button class="btn btn-link" (click)="onDeleteClicked(item)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </ng-container>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td colspan="4">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</table>

@@ -1,0 +1,163 @@
+<div class="row gocheeta-panel">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="card-title ">Branch Details</h4>
+                                <p class="card-category"> All the branches are listed here</p>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success pull-right" (click)="loadCreateNewBranchModal()">
+                                    <i class="fa fa-plus"></i>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <app-data-table
+                                [columns]="branchDataTableColumns"
+                                [data]="availableBranches"
+                                [isDeleteSupport]="true"
+                                [isEditSupport]="true"
+                                (deleteEmitter)="deleteBranch($event)"
+                                (editEmitter)="editBranch($event)"
+                            ></app-data-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="card-title ">Street Details</h4>
+                                <p class="card-category"> All the streets are listed here</p>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success pull-right" (click)="loadCreateStreetModal()">
+                                    <i class="fa fa-plus"></i>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                          <app-data-table
+                            [columns]="streetDataTableColumns"
+                            [data]="availableStreets"
+                            [isDeleteSupport]="true"
+                            [isEditSupport]="true"
+                            (deleteEmitter)="deleteStreet($event)"
+                            (editEmitter)="loadEditStreetMenu($event)"
+                        ></app-data-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>      
+</div>
+
+<!-- modals -->
+<div class="modal fade" id="createBranchModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New Branch</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Branch Name" [(ngModel)]="newBranch.name">
+            </mat-form-field>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="createNewBranch()">Save</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateBranch" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Branch</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Branch Name" [(ngModel)]="updateBranch.name">
+            </mat-form-field>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="updateExcistingBranch()">Save</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="createStreetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New Street</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Street Name" [(ngModel)]="newStreet.name">
+            </mat-form-field>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select Branch</label>
+                <select class="form-control" [(ngModel)]="newStreet.branchId">
+                  <option *ngFor="let branch of availableBranches" [value]="branch.id">{{branch.name}}</option>
+                </select>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="createNewStreet()">Save</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editStreetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Street</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <mat-form-field class="example-full-width">
+              <input matInput placeholder="Street Name" [(ngModel)]="updateStreet.name">
+          </mat-form-field>
+          <div class="form-group">
+              <label for="exampleFormControlSelect1">Select Branch</label>
+              <select class="form-control" [(ngModel)]="updateStreet.branchId">
+                <option *ngFor="let branch of availableBranches" [value]="branch.id">{{branch.name}}</option>
+              </select>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="editStreet()">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

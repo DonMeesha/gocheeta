@@ -1,0 +1,108 @@
+<div class="row gocheeta-panel">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="card-title ">Vehicle</h4>
+                                <p class="card-category"> All the Vehicles are listed here</p>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success pull-right">
+                                    <i class="fa fa-plus"></i>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="card-title ">Category</h4>
+                                <p class="card-category"> All the categories are listed here</p>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success pull-right" (click)="loadCategoryModal()">
+                                    <i class="fa fa-plus"></i>
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <app-data-table
+                                [data]="availableCategories"
+                                [isDeleteSupport]="true"
+                                [isEditSupport]="true"
+                                [columns]="categoryTableColumns"
+                                (deleteEmitter)="deleteCategory($event)"
+                                (editEmitter)="loadUpdateCategoryModal($event)"
+                            ></app-data-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>      
+</div>
+
+<!-- models -->
+<div class="modal fade" id="createCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Category Name" type="text" [(ngModel)]="newCategory.name">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Category price" type="number" [(ngModel)]="newCategory.price">
+            </mat-form-field>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="createCategory()">Save</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="updateCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Category</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Category name" type="text" [(ngModel)]="updateCategory.name">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Category price" type="number" [(ngModel)]="updateCategory.price">
+            </mat-form-field>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="updateCategoryMethod()">Save</button>
+        </div>
+      </div>
+    </div>
+</div>
